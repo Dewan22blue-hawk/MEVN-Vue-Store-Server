@@ -20,5 +20,8 @@ db.url = dbconfig.url;
 // Model ini dihubungkan dengan skema Mongoose yang dikirim sebagai argumen
 db.products = require("./productModel")(mongoose);
 
+// Mengimpor dan menginisialisasi model 'orders' dari file orderModel.js
+db.orders = require("./orderModel")(mongoose);
+
 // Mengekspor objek db agar bisa digunakan di bagian lain dari aplikasi
 module.exports = db;
