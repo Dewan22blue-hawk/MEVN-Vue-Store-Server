@@ -48,6 +48,10 @@ app.get("/", (req, res) => {
 });
 // Mendefinisikan route HTTP GET untuk path root ("/"). Ketika route ini diakses, server akan mengirimkan respons JSON dengan pesan "Welcome to Vuestore Server MEVN".
 
+// Baris ini mengimpor file product.routes.js yang terletak di folder app/routes. File tersebut kemungkinan besar berisi definisi rute untuk produk dalam aplikasi Anda.
+// Setelah modul product.routes diimpor, modul tersebut langsung dieksekusi dengan parameter app. app adalah instance dari aplikasi Express yang digunakan untuk mendefinisikan rute-rute dalam aplikasi. Dengan kata lain, modul product.routes mengharapkan menerima app sebagai parameter untuk menambahkan rute-rute ke aplikasi Express tersebut.
+require("./app/routes/productRoute")(app);
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
