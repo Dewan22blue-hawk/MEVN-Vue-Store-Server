@@ -56,7 +56,7 @@ exports.addToCart = (req, res) => {
   // Mengambil parameter `id` dari URL permintaan, dan mengonversinya menjadi tipe data `Number`.
 
   const productCode = String(req.body.product);
-  // Mengambil kode produk dari body permintaan dan mengonversinya menjadi tipe data `String`.
+  // Mengambil kode produk dari body/request form permintaan dari klien, dan mengonversinya menjadi tipe data `String`.
 
   Order.updateOne(
     // Menggunakan metode `updateOne` pada model `Order` untuk memperbarui dokumen yang cocok dengan `user_id`.
@@ -83,5 +83,43 @@ exports.addToCart = (req, res) => {
 
       res.status(409).send({ message: err.message });
       // Mengirimkan status HTTP 409 (Conflict) dan pesan kesalahan ke klien jika terjadi masalah dalam menambahkan item ke keranjang.
+    });
+};
+
+exports.removeFromCart = (req, res) => {
+  // Mendefinisikan fungsi `removeFromCart` yang diekspor untuk menangani permintaan HTTP.
+  // Fungsi ini menerima objek `req` (request) dan `res` (response) dari Express.js.
+
+  const id = Number(req.params.id);
+  // Mengambil parameter `id` dari URL permintaan dan mengonversinya menjadi tipe data `Number`.
+  // Ini digunakan untuk mengidentifikasi pengguna berdasarkan ID-nya.
+
+  const productCode = String(req.params.product);
+  // Mengambil parameter `product` dari URL permintaan dan mengonversinya menjadi tipe data `String`.
+  // Ini digunakan untuk mengidentifikasi kode produk yang akan dihapus dari keranjang belanja.
+
+  Order.updateOne(
+    {
+      user_id: id,
+      // Mencari dokumen dalam koleksi `orders` yang memiliki `user_id` yang sesuai dengan ID pengguna.
+    },
+    {
+      $pull: {
+        cart_items: productCode,
+        // Menggunakan operator `$pull` untuk menghapus `productCode` dari array `cart_items` dalam dokumen yang ditemukan.
+      },
+    }
+  )
+    .then((result) => {
+      // Jika pembaruan berhasil, `result` akan berisi hasilnya.
+
+      res.send(result);
+      // Mengirimkan hasil pembaruan sebagai respons ke klien.
+    })
+    .catch((err) => {
+      // Jika terjadi kesalahan selama proses pembaruan, `err` akan berisi rincian kesalahan.
+
+      res.status(409).send({ message: err.message });
+      // Mengirimkan status HTTP 409 (Conflict) dan pesan kesalahan ke klien jika terjadi masalah dalam menghapus item dari keranjang.
     });
 };

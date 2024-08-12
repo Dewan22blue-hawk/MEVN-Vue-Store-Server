@@ -14,6 +14,11 @@ module.exports = (app) => {
   // Ketika ada permintaan POST ke URL ini, fungsi `addToCart` dari `orderController` akan dijalankan.
   // `:id` adalah parameter dinamis dalam URL yang dapat menangkap nilai ID pengguna.
   // Fungsi `addToCart` digunakan untuk menambahkan item ke dalam keranjang belanja pengguna yang ID-nya diberikan melalui URL.
+  router.delete("/user/:id/product/:product", orders.removeFromCart);
+  // Menentukan rute HTTP DELETE dengan path `/user/:id/product/:product`.
+  // Saat ada permintaan DELETE ke URL ini, fungsi `removeFromCart` dari `orderController` akan dijalankan.
+  // `:id` adalah parameter dinamis yang mewakili ID pengguna, dan `:product` adalah parameter dinamis yang mewakili kode produk.
+  // Fungsi `removeFromCart` akan menghapus produk yang ditentukan dari keranjang belanja pengguna berdasarkan ID dan kode produk yang diberikan.
 
   app.use("/api/orders", router);
   // Menggunakan router yang telah didefinisikan sebelumnya untuk semua permintaan yang dimulai dengan `/api/orders`. Dengan kata lain, permintaan ke `/api/orders` akan diteruskan ke router ini.
