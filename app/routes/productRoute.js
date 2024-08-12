@@ -10,6 +10,9 @@ module.exports = (app) => {
   router.get("/", products.findAll);
   // Menentukan rute GET pada URL root (`/`). Saat ada permintaan GET ke URL ini, fungsi `findAll` dari `productController` akan dijalankan untuk mengambil semua produk.
 
+  router.get("/:id", products.findOne);
+  // Menentukan rute GET pada URL root (`/`). Saat ada permintaan GET ke URL ini, fungsi `findOne` dari `productController` akan dijalankan untuk mengambil produk berdasarkan id yang dikirimkan dari url parameter atau req.params.
+  // /:id: Bagian :id adalah parameter dinamis dalam URL. Ketika klien mengakses URL dengan format /api/products/suatu_id, nilai suatu_id akan diteruskan ke fungsi findOne sebagai req.params.id.
   app.use("/api/products", router);
   // Menggunakan router yang telah didefinisikan sebelumnya untuk semua permintaan yang dimulai dengan `/api/products`. Dengan kata lain, permintaan ke `/api/products` akan diteruskan ke router ini.
 };

@@ -24,3 +24,25 @@ exports.findAll = (req, res) => {
       // Mengirimkan respons dengan status kode `409` (Conflict) dan pesan error ke klien.
     });
 };
+
+exports.findOne = (req, res) => {
+  // Mengekspor fungsi `findOne` yang akan menangani permintaan untuk mencari satu produk berdasarkan kode unik.
+
+  Product.findOne({
+    code: req.params.id,
+    // Menggunakan metode `findOne` pada model `Product` untuk mencari satu dokumen yang memiliki `code` yang cocok dengan `id` yang diterima dari parameter URL (`req.params.id`).
+  })
+    .then((result) => {
+      // Jika pencarian berhasil, hasilnya akan dikembalikan dalam `result`.
+
+      res.send(result);
+      // Mengirimkan hasil pencarian ke klien sebagai respons.
+    })
+
+    .catch((err) => {
+      // Jika terjadi kesalahan selama pencarian, `err` akan berisi detail kesalahannya.
+
+      res.status(409).send({ message: err.message });
+      // Mengirimkan status HTTP 409 (Conflict) beserta pesan kesalahan ke klien.
+    });
+};
