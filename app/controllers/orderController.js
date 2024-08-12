@@ -48,3 +48,40 @@ exports.findOrder = (req, res) => {
       // Mengirimkan status HTTP 409 (Conflict) dan pesan kesalahan ke klien jika terjadi masalah dalam mengambil data order.
     });
 };
+
+exports.addToCart = (req, res) => {
+  // Mendefinisikan fungsi `addToCart` yang akan diekspor untuk menambahkan item ke keranjang belanja pengguna. Fungsi ini juga menerima objek `req` dan `res`.
+
+  const id = Number(req.params.id);
+  // Mengambil parameter `id` dari URL permintaan, dan mengonversinya menjadi tipe data `Number`.
+
+  const productCode = String(req.body.product);
+  // Mengambil kode produk dari body permintaan dan mengonversinya menjadi tipe data `String`.
+
+  Order.updateOne(
+    // Menggunakan metode `updateOne` pada model `Order` untuk memperbarui dokumen yang cocok dengan `user_id`.
+
+    {
+      user_id: id,
+      // Mencari dokumen yang memiliki `user_id` yang cocok dengan `id` yang diberikan.
+    },
+    {
+      $addToSet: {
+        cart_items: productCode,
+        // Menggunakan operator `$addToSet` untuk menambahkan `productCode` ke array `cart_items`, jika kode tersebut belum ada di dalam array.
+      },
+    }
+  )
+    .then((result) => {
+      // Jika pembaruan berhasil, `result` akan berisi hasil pembaruan.
+
+      res.send(result);
+      // Mengirimkan hasil pembaruan sebagai respons ke klien.
+    })
+    .catch((err) => {
+      // Jika terjadi kesalahan selama proses pembaruan, `err` akan berisi rincian kesalahan.
+
+      res.status(409).send({ message: err.message });
+      // Mengirimkan status HTTP 409 (Conflict) dan pesan kesalahan ke klien jika terjadi masalah dalam menambahkan item ke keranjang.
+    });
+};

@@ -9,6 +9,11 @@ module.exports = (app) => {
 
   router.get("/user/:id", orders.findOrder);
   // Mendefinisikan rute GET pada path `/user/:id`. Saat ada permintaan GET ke URL ini, fungsi `findOrder` dari `orderController` akan dijalankan untuk mengambil pesanan berdasarkan ID pengguna yang diberikan.
+  router.post("/user/:id/add", orders.addToCart);
+  // Menentukan rute HTTP POST pada URL `/user/:id/add`.
+  // Ketika ada permintaan POST ke URL ini, fungsi `addToCart` dari `orderController` akan dijalankan.
+  // `:id` adalah parameter dinamis dalam URL yang dapat menangkap nilai ID pengguna.
+  // Fungsi `addToCart` digunakan untuk menambahkan item ke dalam keranjang belanja pengguna yang ID-nya diberikan melalui URL.
 
   app.use("/api/orders", router);
   // Menggunakan router yang telah didefinisikan sebelumnya untuk semua permintaan yang dimulai dengan `/api/orders`. Dengan kata lain, permintaan ke `/api/orders` akan diteruskan ke router ini.
