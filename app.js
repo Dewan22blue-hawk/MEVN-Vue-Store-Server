@@ -7,6 +7,9 @@ const mongoose = require("mongoose");
 const app = express();
 // Membuat instance dari aplikasi Express yang akan digunakan untuk mengatur server.
 
+const path = require("path");
+// Mengimpor modul `path` yang dimiliki oleh node.js dan digunakan untuk mengatur jalur file
+
 const port = process.env.PORT || 8000;
 // Mengatur port server, dengan menggunakan variabel lingkungan `PORT` jika tersedia, atau default ke `8000` jika tidak ada.
 
@@ -15,6 +18,11 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 // Middleware Express yang digunakan untuk mem-parsing data URL-encoded dalam body request. Opsi `extended: true` memungkinkan parsing data yang lebih kompleks.
+
+app.use("/img", express.static(path.join(__dirname, "./public/img")));
+// Menggunakan middleware `express.static` untuk melayani file statis.
+// Path "/img" menjadi endpoint yang dapat diakses publik, dan mengarah ke folder "./public/img".
+// Dengan kata lain, ketika klien mengakses "/img/someimage.jpg", server akan mengirimkan file yang sesuai dari direktori "./public/img".
 
 // Mengimpor objek 'db' dari file './app/models'
 // Objek ini berisi konfigurasi mongoose dan model database yang telah Anda buat sebelumnya.
