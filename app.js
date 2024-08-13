@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
 
   res.header("Access-Control-Allow-Origin", "*");
   // Menambahkan header `Access-Control-Allow-Origin` dengan nilai `*`. Ini memungkinkan permintaan dari semua domain (origin) untuk mengakses sumber daya dari server. Ini adalah pengaturan umum untuk mengizinkan akses CORS dari semua asal.
-
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   // Menambahkan header `Access-Control-Allow-Headers` untuk menentukan header yang diizinkan dalam permintaan CORS. Dalam hal ini, server mengizinkan header `Origin`, `X-Requested-With`, `Content-Type`, dan `Accept` dalam permintaan yang dikirim ke server.
 
